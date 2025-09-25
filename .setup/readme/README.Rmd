@@ -1,0 +1,27 @@
+---
+title: "ijapesigan/pymc"
+author: "Ivan Jacob Agaloos Pesigan"
+date: "`r Sys.Date()`"
+output: github_document
+---
+
+<!-- README.md is generated from .setup/readme/README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+<!-- badges: start -->
+[![Make Project](https://github.com/ijapesigan/docker-pymc/actions/workflows/make.yml/badge.svg)](https://github.com/ijapesigan/docker-pymc/actions/workflows/make.yml)
+[![Docker Build and Push [multi]](https://github.com/ijapesigan/docker-pymc/actions/workflows/docker-build-push-multi.yml/badge.svg)](https://github.com/ijapesigan/docker-pymc/actions/workflows/docker-build-push-multi.yml)
+[![Shell Check](https://github.com/ijapesigan/docker-pymc/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/ijapesigan/docker-pymc/actions/workflows/shellcheck.yml)
+<!-- badges: end -->
+
+```bash
+docker run --rm -p 8888:8888 -v "$PWD":/home/jovyan/work ijapesigan/pymc
+```
