@@ -27,9 +27,8 @@ USER $NB_USER
 # Empty token is okay on a trusted machine; set a token in `docker run` for security.
 ENV JUPYTER_TOKEN=""
 ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["jupyter", "lab", "--ip=0.0.0.0", "--no-browser",
-     "--ServerApp.token=",
-     "--IdentityProvider.token="]
+CMD jupyter lab --ip=0.0.0.0 --no-browser --ServerApp.token= --IdentityProvider.token=
+
 
 # extra metadata
 LABEL org.opencontainers.image.source="https://github.com/ijapesigan/docker-pymc" \
