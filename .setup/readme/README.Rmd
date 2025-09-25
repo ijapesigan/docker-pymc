@@ -23,5 +23,5 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 ```bash
-docker run --rm -p 8888:8888 -v "$PWD":/home/jovyan/work ijapesigan/pymc
+docker run --rm -p 8888:8888 -v "$PWD":/work ijapesigan/pymc
 ```
