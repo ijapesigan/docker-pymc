@@ -7,8 +7,8 @@ WORKDIR /app
 RUN mamba create -y -n pymc_env -c conda-forge \
       python=3.11 \
       "pymc>=5" \
-      pymc-experimental \
-      pymc-marketing \
+      "pymc-experimental" \
+      "pymc-marketing" \
       numpyro \
       blackjax \
       nutpie \
