@@ -1,0 +1,25 @@
+name: pymc_env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pymc>=5
+  - arviz
+  - numpy
+  - scipy
+  - pandas
+  - xarray
+  - statsmodels
+  - jax>=0.4,<0.5
+  - jaxlib>=0.4,<0.5
+  - numpyro
+  - blackjax
+  - nutpie
+  - jupyterlab
+  - ipykernel
+  - ipywidgets
+  - pip
+  - pip:
+      - pymc-extras
+      - pymc-experimental
+      - pymc-marketing

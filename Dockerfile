@@ -2,21 +2,11 @@ FROM condaforge/mambaforge:latest
 
 WORKDIR /app
 
-# Create a single env with everything you need
-# (ipykernel is still required for Python notebooks to run)
-RUN mamba create -y -n pymc_env -c conda-forge \
-      python=3.11 \
-      "pymc>=5" \
-      "pymc-experimental" \
-      "pymc-marketing" \
-      numpyro \
-      blackjax \
-      nutpie \
-      jupyterlab \
-      ipykernel \
-      ipywidgets \
-      statsmodels \
-  && mamba clean -afy
+# Copy the environment.yml into the image
+COPY scripts/environment.yml /tmp/environment.yml
+
+# Build the environment
+RUN mamba env create -f /tmp/environment.yml && mamba clean -afy
 
 # Expose Jupyter
 EXPOSE 8888
