@@ -1,4 +1,4 @@
-name: base
+name: pymc_env
 channels:
   - conda-forge
   - nodefaults
