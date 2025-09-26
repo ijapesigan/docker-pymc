@@ -2,23 +2,23 @@ FROM condaforge/mambaforge:latest
 
 WORKDIR /app
 
-# Create environment with PyMC
-RUN mamba create -y -n pymc_env -c conda-forge "pymc>=5" && \
-    mamba run -n pymc_env conda install -y numpyro blackjax -c conda-forge && \
-    mamba run -n pymc_env conda install -y nutpie -c conda-forge && \
-    mamba clean -afy
+# Create a single env with everything you need
+# (ipykernel is still required for Python notebooks to run)
+RUN mamba create -y -n pymc_env -c conda-forge \
+      python=3.11 \
+      "pymc>=5" \
+      numpyro \
+      blackjax \
+      nutpie \
+      jupyterlab \
+      ipykernel \
+  && mamba clean -afy
 
-# Register kernel for Jupyter
-RUN mamba run -n pymc_env python -m ipykernel install --user \
-    --name pymc_env --display-name "Python (pymc_env)"
-
-# Install JupyterLab in base environment
-RUN mamba install -y jupyterlab && mamba clean -afy
-
+# Expose Jupyter
 EXPOSE 8888
 
-CMD ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root", "--no-browser"]
-
+# Launch JupyterLab *from inside* the env, no kernel registration needed
+CMD ["bash", "-lc", "mamba run -n pymc_env jupyter lab --ip=0.0.0.0 --allow-root --no-browser"]
 
 # extra metadata
 LABEL org.opencontainers.image.source="https://github.com/ijapesigan/docker-pymc" \
