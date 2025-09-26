@@ -22,7 +22,6 @@ dependencies:
   - tqdm
   - pip
   - pip:
-      - arviz-extras
       - pymc-experimental
       - pymc-extras
       - pymc-marketing
