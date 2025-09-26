@@ -1,33 +1,23 @@
-FROM python:3.11-slim
+FROM condaforge/mambaforge:latest
 
-# System dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential graphviz tini \
- && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
 
-# Python dependencies
-RUN pip install -U uv && \
-    uv pip install --system \
-      jupyterlab \
-      "pymc>=5.15" "jax[cpu]>=0.4.30" "jaxlib>=0.4.30" \
-      blackjax arviz statsmodels graphviz \
-      python-lsp-server  # optional: nicer editor experience
+# Create environment with PyMC
+RUN mamba create -y -n pymc_env -c conda-forge "pymc>=5" && \
+    mamba run -n pymc_env conda install -y numpyro blackjax -c conda-forge && \
+    mamba run -n pymc_env conda install -y nutpie -c conda-forge && \
+    mamba clean -afy
 
-# Make PyTensor use g++
-ENV PYTENSOR_FLAGS="cxx=/usr/bin/g++"
+# Register kernel for Jupyter
+RUN mamba run -n pymc_env python -m ipykernel install --user \
+    --name pymc_env --display-name "Python (pymc_env)"
 
-# Create a non-root user and a writable work dir
-ARG NB_USER=jovyan
-ARG NB_UID=1000
-RUN useradd -m -s /bin/bash -u $NB_UID $NB_USER
-WORKDIR /home/$NB_USER/work
-USER $NB_USER
+# Install JupyterLab in base environment
+RUN mamba install -y jupyterlab && mamba clean -afy
 
-# Jupyter config
-# Empty token is okay on a trusted machine; set a token in `docker run` for security.
-ENV JUPYTER_TOKEN=""
-ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD jupyter lab --ip=0.0.0.0 --no-browser --ServerApp.token= --IdentityProvider.token=
+EXPOSE 8888
+
+CMD ["jupyter", "lab", "--ip=0.0.0.0", "--allow-root", "--no-browser"]
 
 
 # extra metadata
