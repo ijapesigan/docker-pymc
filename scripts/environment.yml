@@ -1,4 +1,4 @@
-name: pymc_env
+name: base
 channels:
   - conda-forge
 dependencies:
@@ -18,8 +18,11 @@ dependencies:
   - jupyterlab
   - ipykernel
   - ipywidgets
+  - widgetsnbextension
+  - tqdm
   - pip
   - pip:
-      - pymc-extras
+      - arviz-extras
       - pymc-experimental
+      - pymc-extras
       - pymc-marketing
